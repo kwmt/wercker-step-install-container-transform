@@ -32,6 +32,7 @@ echo 'install curl, pip, awscli...'
 sudo apt-get update && apt-get install -y curl
 sudo curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
 sudo python get-pip.py
+sudo pip install --upgrade pip enum34
 sudo pip install awscli
 sudo pip install container-transform
 aws --version

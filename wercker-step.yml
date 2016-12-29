@@ -1,5 +1,5 @@
 name: install-container-transform
-version: 0.0.4
+version: 0.0.5
 description: install container transform for deploying ECS by docker-compose.yml
 keywords:
   - AWS
