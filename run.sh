@@ -24,6 +24,9 @@ fi
 if [ ! -n "$WERCKER_INSTALL_CONTAINER_TRANSFORM_COUNT" ]; then
     echo '[WARN] No scale container'
 fi
+if [ ! -n "$WERCKER_INSTALL_CONTAINER_TRANSFORM_COMPOSE_FILE" ]; then
+    WERCKER_INSTALL_CONTAINER_TRANSFORM_COMPOSE_FILE="docker-compose.yml"
+fi
 
 
 echo 'Synchronizing References in apt-get...'
@@ -41,7 +44,7 @@ aws configure set aws_secret_access_key $WERCKER_INSTALL_CONTAINER_TRANSFORM_SEC
 aws configure set default.region $WERCKER_INSTALL_CONTAINER_TRANSFORM_REGION
 
 echo 'register task definition'
-aws ecs register-task-definition --family $WERCKER_INSTALL_CONTAINER_TRANSFORM_DEFINITION --container-definitions "$(cat docker-compose.yml | container-transform)"
+aws ecs register-task-definition --family $WERCKER_INSTALL_CONTAINER_TRANSFORM_DEFINITION --container-definitions "$(cat $WERCKER_INSTALL_CONTAINER_TRANSFORM_COMPOSE_FILE | container-transform)"
 
 echo ''
 aws ecs run-task --cluster $WERCKER_INSTALL_CONTAINER_TRANSFORM_CLUSTER --task-definition $WERCKER_INSTALL_CONTAINER_TRANSFORM_DEFINITION --count $WERCKER_INSTALL_CONTAINER_TRANSFORM_COUNT
